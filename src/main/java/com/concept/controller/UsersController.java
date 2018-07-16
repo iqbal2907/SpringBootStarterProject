@@ -6,6 +6,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,9 @@ import com.concept.inputobjects.UsersInputJson;
 import com.concept.outputobjects.Response;
 import com.concept.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping(value = "/users")
 public class UsersController {
@@ -32,7 +36,8 @@ public class UsersController {
 	@PostMapping
 //	@Consumes({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public ResponseEntity<Response> postUsers(@RequestBody UsersInputJson user) {
-		System.out.println("Input User ---------------- : "+user);
+		log.info("Input User ---------------- : "+user);
+//		System.out.println("Input User ---------------- : "+user);
 		return userService.postUser(user);
 	}
 

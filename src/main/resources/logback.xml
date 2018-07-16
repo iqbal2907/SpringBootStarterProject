@@ -1,0 +1,114 @@
+<configuration scan="true">
+
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+
+
+
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator" />
+
+
+
+	<variable name="SIMPLE_PATTERN"
+		value="%d{yyyy-MM-dd HH:mm:ss.SSSZ} [%X{Leap-Request-Context}] [%thread] %-5level %logger - %M: %msg %n" />
+
+	<variable name="STARTER_LOG" value="logs/SBSP" />
+
+	<variable name="MAX_HISTORY" value="15" />
+
+	<variable name="MAXSIZE" value="10MB" />
+
+
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+
+		<encoder>
+
+			<pattern>${SIMPLE_PATTERN}</pattern>
+
+		</encoder>
+
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+
+			<level>TRACE</level>
+
+		</filter>
+
+	</appender>
+
+
+
+	<appender name="SVC"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+		<file>${STARTER_LOG}/springbootstarter.log</file>
+
+		<encoder>
+
+			<pattern>${SIMPLE_PATTERN}</pattern>
+
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+			<fileNamePattern>${STARTER_LOG}/starter_project.%d.%i.log.zip
+			</fileNamePattern>
+
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+
+				<maxFileSize>${MAXSIZE}</maxFileSize>
+
+			</timeBasedFileNamingAndTriggeringPolicy>
+
+			<maxHistory>${MAX_HISTORY}</maxHistory>
+
+		</rollingPolicy>
+
+	</appender>
+
+
+
+	<root>
+
+		<level value="INFO" />
+
+		<appender-ref ref="SVC" />
+
+		<appender-ref ref="CONSOLE" />
+
+	</root>
+
+
+
+	<logger name="org.springframework" level="WARN" />
+
+	<logger name="com.concept.controller" level="TRACE" />
+
+	<!--<logger name="com.emc.security.oauth2" level="DEBUG"/> -->
+
+	<!--<logger name="org.apache.tomcat" level="WARN"/> -->
+
+	<!--<logger name="org.springframework.security" level="DEBUG"/> -->
+
+	<!-- <logger name="org.springframework.web" level="INFO"/> -->
+
+	<!-- <logger name="org.springframework.boot.context.embedded.tomcat" level="INFO"/> -->
+
+	<!-- <logger name="org.springframework.data" level="INFO"/> -->
+
+	<!-- <logger name="org.springframework.jdbc" level="WARN"/> -->
+
+
+
+
+
+	<!-- timing logger -->
+
+	<logger
+		name="org.springframework.aop.interceptor.PerformanceMonitorInterceptor"
+		level="TRACE" />
+
+
+
+</configuration>
+
