@@ -1,10 +1,5 @@
 package com.concept.controller;
 
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,6 +24,8 @@ public class UsersController {
 	@Autowired
 	UserService userService;
 
+
+	
 	@GetMapping
 //	@Produces({MediaType.APPLICATION_XML,MediaType.APPLICATION_JSON})
 	public ResponseEntity<Response> getUsers() {
@@ -45,6 +42,7 @@ public class UsersController {
 	 * 
 	 */
 	@PostMapping
+	@RequestMapping(value = "/requestbody")
 	public ResponseEntity<Response> postUsers(@RequestBody UsersInputJson user) {
 		log.info("Input User ---------------- : "+user);
 		return userService.postUser(user);
@@ -96,24 +94,4 @@ public class UsersController {
 	 * 
 	 */
 	
-	@POST
-	@Path(value = "/queryparam")
-	public ResponseEntity<Response> postUsersQueryParam(@QueryParam(value="id") int id, @QueryParam(value="name") String name) {
-		System.out.println("****************** queryparam  ******************");
-		UsersInputJson user = new UsersInputJson();
-		user.setId(id);
-		user.setName(name);
-		return userService.postUser(user);
-	}
-	
-	@POST
-	@Path(value = "/pathparam/{id}/{name}")
-	public ResponseEntity<Response> postUsersPathParam(@PathParam(value="id") int id, @PathParam(value="name") String name) {
-		System.out.println("****************** pathparam  ******************");
-		UsersInputJson user = new UsersInputJson();
-		user.setId(id);
-		user.setName(name);
-		return userService.postUser(user);
-	}
-
 }
